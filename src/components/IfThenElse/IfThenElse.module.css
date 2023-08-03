@@ -1,0 +1,35 @@
+.blockIf {
+  display: flex;
+  flex-direction: column;
+}
+.blockIf_child {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.if_color {
+  width: min-content;
+  height: min-content;
+  border-radius: 2px;
+  padding: 2px;
+  color: white;
+  background: green;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+.wrapperIf {
+  display: flex;
+  flex-direction: column;
+}
+.delete {
+  outline: none;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: rgba(255, 0, 0, 0.5);
+  margin-top: 5px;
+  padding: 2px;
+}

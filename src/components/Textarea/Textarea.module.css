@@ -1,0 +1,8 @@
+.text {
+  min-width: 385px;
+  padding: 5px;
+  height: 41px;
+  outline-color: blue;
+  resize: none;
+  border-radius: 5px;
+}

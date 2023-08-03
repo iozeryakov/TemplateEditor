@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from 'react';
+import { TemplateEditor } from './components/TemplateEditor/TemplateEditor';
+import { Context } from '.';
+import { observer } from 'mobx-react-lite';
+import { save } from './utils/utils';
+import useLastFocus from './hooks/useLastFocus';
+
 
 function App() {
+  const { modals } = useContext(Context)
+  const isOpen = modals.getIsOpen("modal1")
+  const { setLastFocus } = useLastFocus(isOpen)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button className='btn' type='button' onClick={(e) => { setLastFocus(e.currentTarget); modals.open("modal1"); }}>Message Editor</button>
+      {isOpen &&
+        <TemplateEditor
+          callbackSave={save}
+          arrVarNames={localStorage.arrVarNames ? JSON.parse(localStorage.arrVarNames) : ['firstname', 'lastname', 'company', 'position']}
+          template={localStorage.template ? JSON.parse(localStorage.template) : null} />}
+    </>
   );
 }
 
-export default App;
+export default observer(App);
+
