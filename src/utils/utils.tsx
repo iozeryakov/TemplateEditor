@@ -30,7 +30,7 @@ export function messageGenerator(node: templateType, values: IValues): string {
             }
         }
     });
-    return message;
+    return getMessage(message, values);
 };
 /*
 * Функция для замены в тексте переменных на вводимые значения 
