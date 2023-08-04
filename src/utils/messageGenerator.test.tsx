@@ -94,6 +94,16 @@ describe("Проверка функции messageGenerator", () => {
         const message = messageGenerator(template2, values)
         expect(message).toBe("Привет Иван. Как дела ?")
     })
+    test("Шаблон с блоком ifthenelse, первое значение ссылается на вторую переменную, а та пустая", () => {
+        const values = { name: "{friend}", friend: "" }
+        const message = messageGenerator(template2, values)
+        expect(message).toBe("Привет . Как дела ?")
+    })
+    test("Шаблон с блоком ifthenelse, первое значение ссылается на вторую переменную, а та не пустая", () => {
+        const values = { name: "{friend}", friend: "Иван" }
+        const message = messageGenerator(template2, values)
+        expect(message).toBe("Привет Иван мой Иван. Как дела Иван?")
+    })
 })
 
 describe("Проверка функции getMessage", () => {
