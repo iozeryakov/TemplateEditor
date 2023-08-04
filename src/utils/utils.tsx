@@ -36,7 +36,16 @@ export function messageGenerator(node: templateType, values: IValues): string {
 * Функция для замены в тексте переменных на вводимые значения 
 */
 export function getMessage(strWithVar: string, values: IValues): string {
-    const match = strWithVar.match(/\{+([^{}]+)\}+/g); //ищем все подстроки в фигурных скобках
+    const regex = /\{+([^{}]+)\}+/g; //ищем все подстроки в фигурных скобках
+    let replacedStr = strWithVar
+    replacedStr = replacedStr.replace(regex, (match, key) => {
+        // Проверяем, есть ли значение для ключа в объекте, иначе оставляем ключ без изменений
+        return values.hasOwnProperty(key)
+            ? match.split(`{${key}}`).join(values[key])
+            : match;
+    });
+    return replacedStr;
+    /**const match = strWithVar.match(/\{+([^{}]+)\}+/g); //ищем все подстроки в фигурных скобках
     let replacedStr = strWithVar;
     if (match) {
       for (const name of match) {
@@ -47,7 +56,7 @@ export function getMessage(strWithVar: string, values: IValues): string {
           }
       }
     }
-    return replacedStr;
+    return replacedStr;*/
 };
 /*
 * Функция генерирует уникальные id
