@@ -30,28 +30,23 @@ export function messageGenerator(node: templateType, values: IValues): string {
             }
         }
     });
-    return getMessage(message, values);
+    return message;
 };
 /*
 * Функция для замены в тексте переменных на вводимые значения 
 */
 export function getMessage(strWithVar: string, values: IValues): string {
-    //const match = strWithVar.match(/\{+([^{}]+)\}+/g); //ищем все подстроки в фигурных скобках
+    const match = strWithVar.match(/\{+([^{}]+)\}+/g); //ищем все подстроки в фигурных скобках
     let replacedStr = strWithVar;
-    for (const value of Object.keys(values)) {
-        const replacer = values[value];
-        replacedStr = replacedStr.split(`{${value}}`).join(replacer);
+    if (match) {
+      for (const name of match) {
+          const clearName = name.slice(1, name.length - 1);// убираем фигурные скобки 
+          if (values[clearName] !== undefined) { //если такая переменная есть, то заменяем ее на введенное значение
+              const replacer = values[clearName];
+              replacedStr = replacedStr.split(name).join(replacer);
+          }
+      }
     }
-    /**if (match) {
-        for (const name of match) {
-            const clearName = name.slice(1, name.length - 1);// убираем фигурные скобки 
-            if (values[clearName] !== undefined) { //если такая переменная есть, то заменяем ее на введенное значение
-                const replacer = values[clearName];
-                replacedStr = replacedStr.split(name).join(replacer);
-            }
-
-        }
-    }*/
     return replacedStr;
 };
 /*
